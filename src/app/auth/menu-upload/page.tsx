@@ -3,15 +3,22 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
+import { ArrowLeft } from 'lucide-react';
 
 export default function MenuUploadPage() {
+  const router = useRouter();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setSelectedFile(e.target.files[0]);
     }
+  };
+
+  const handleBack = () => {
+    router.back();
   };
 
   return (
@@ -22,13 +29,15 @@ export default function MenuUploadPage() {
           {/* Logo at top */}
           <div className="absolute top-6 left-0 right-0 flex justify-center">
             <div className="max-w-md w-full">
-              <Image 
-                src="/logo.png" 
-                alt="QuickFetch Logo" 
-                width={180} 
-                height={54}
-                className="w-auto h-auto"
-              />
+               <Link href="/">
+    <Image
+      src="/logo.png"
+      alt="QuickFetch Logo"
+      width={200}
+      height={60}
+      className="w-auto h-auto cursor-pointer"
+    />
+  </Link>
             </div>
           </div>
           
@@ -71,6 +80,16 @@ export default function MenuUploadPage() {
         </div>
         
         <div className="w-full max-w-md space-y-8 mt-20 lg:mt-0">
+          {/* Back Button */}
+          <button
+            onClick={handleBack}
+            className="flex items-center gap-2 text-orange-600 hover:text-orange-700 transition-colors font-medium text-lg"
+            type="button"
+          >
+            <ArrowLeft size={24} />
+            <span>Back</span>
+          </button>
+
           {/* Header */}
           <div className="space-y-2">
             <h1 className="text-3xl font-bold text-gray-900">

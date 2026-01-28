@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/input';
+import Link from 'next/link';
 
 export default function PayoutSetupPage() {
   const router = useRouter();
@@ -89,13 +90,15 @@ export default function PayoutSetupPage() {
           {/* Logo at top */}
           <div className="absolute top-6 left-0 right-0 flex justify-center">
             <div className="max-w-md w-full">
-              <Image 
-                src="/logo.png" 
-                alt="QuickFetch Logo" 
-                width={180} 
-                height={54}
-                className="w-auto h-auto"
-              />
+              <Link href="/">
+    <Image
+      src="/logo.png"
+      alt="QuickFetch Logo"
+      width={200}
+      height={60}
+      className="w-auto h-auto cursor-pointer"
+    />
+  </Link>
             </div>
           </div>
           

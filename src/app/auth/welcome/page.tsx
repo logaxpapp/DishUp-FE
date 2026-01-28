@@ -8,16 +8,20 @@ export default function WelcomePage() {
     <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2">
       {/* Left Side - Content */}
       <div className="relative flex items-center justify-center p-8 lg:p-16 bg-white">
-        {/* Logo */}
-        <div className="absolute top-8 left-1/2 -translate-x-1/2 w-full max-w-md">
-          <Image
-            src="/logo.png"
-            alt="QuickFetch Logo"
-            width={200}
-            height={60}
-            className="w-auto h-auto"
-          />
-        </div>
+  
+       {/* Logo */}
+<div className="absolute top-8 left-1/2 -translate-x-1/2 w-full max-w-md">
+  <Link href="/">
+    <Image
+      src="/logo.png"
+      alt="QuickFetch Logo"
+      width={200}
+      height={60}
+      className="w-auto h-auto cursor-pointer"
+    />
+  </Link>
+</div>
+
 
         {/* Centered Content */}
         <div className="w-full max-w-md space-y-8">

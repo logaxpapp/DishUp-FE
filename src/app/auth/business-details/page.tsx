@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { FileUpload } from '@/components/ui/FileUpload';
 import { Input } from '@/components/ui/input';
+import { ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
 
 export default function BusinessDetailsPage() {
   const router = useRouter();
@@ -93,6 +95,10 @@ export default function BusinessDetailsPage() {
     router.push('/auth/payout-setup');
   };
 
+  const handleBack = () => {
+    router.back();
+  };
+
   return (
     <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2">
       {/* Left Side - Image & Description */}
@@ -101,13 +107,15 @@ export default function BusinessDetailsPage() {
           {/* Logo at top */}
           <div className="absolute top-6 left-0 right-0 flex justify-center">
             <div className="max-w-md w-full">
-              <Image 
-                src="/logo.png" 
-                alt="QuickFetch Logo" 
-                width={180} 
-                height={54}
-                className="w-auto h-auto"
+           <Link href="/">
+              <Image
+                src="/logo.png"
+                alt="QuickFetch Logo"
+                width={200}
+                height={60}
+                className="w-auto h-auto cursor-pointer"
               />
+            </Link>
             </div>
           </div>
           
@@ -150,6 +158,16 @@ export default function BusinessDetailsPage() {
         </div>
         
         <div className="w-full max-w-md space-y-8 mt-20 lg:mt-0">
+          {/* Back Button */}
+          <button
+            onClick={handleBack}
+            className="flex items-center gap-2 text-orange-600 hover:text-orange-700 transition-colors font-medium text-lg"
+            type="button"
+          >
+            <ArrowLeft size={24} />
+            <span>Back</span>
+          </button>
+
           {/* Header */}
           <div className="space-y-2">
             <h1 className="text-3xl font-bold text-gray-900">

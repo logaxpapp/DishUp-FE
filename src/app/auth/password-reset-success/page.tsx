@@ -53,13 +53,15 @@ export default function PasswordResetSuccessPage() {
       <div className="flex items-center justify-center p-8 lg:p-16 bg-white relative">
         {/* Transparent Header for Mobile */}
         <div className="lg:hidden absolute top-0 left-0 w-full px-8 py-6">
-          <Image 
-            src="/logo.png" 
-            alt="QuickFetch Logo" 
-            width={180} 
-            height={54}
-            className="w-auto h-auto"
-          />
+           <Link href="/">
+    <Image
+      src="/logo.png"
+      alt="QuickFetch Logo"
+      width={200}
+      height={60}
+      className="w-auto h-auto cursor-pointer"
+    />
+  </Link>
         </div>
         
         <div className="w-full max-w-md space-y-8 mt-20 lg:mt-0 text-center">

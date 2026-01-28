@@ -1,22 +1,63 @@
-import Header from "@/components/landing/Header";
-import HeroSection from "@/components/landing/HeroSection";
-import FeaturesSection from "@/components/landing/FeaturesSection";
-import QuickFetchFeatures from "@/components/landing/QuickFetchFeatures";
-import HowItWorks from "@/components/landing/HowItWorks";
-import DownloadApp from "@/components/landing/DownloadApp";
-import Footer from "@/components/landing/Footer";
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/Button";
 
-
-export default function LandingPage() {
+export default function WelcomePage() {
   return (
-    <main>
-      <Header />
-      <HeroSection />
-      <FeaturesSection />
-      <QuickFetchFeatures/>
-      <HowItWorks/>
-      <DownloadApp />
-      <Footer />
-    </main>
+    <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2">
+      {/* Left Side - Content */}
+      <div className="relative flex items-center justify-center p-8 lg:p-16 bg-white">
+  
+       {/* Logo */}
+<div className="absolute top-8 left-1/2 -translate-x-1/2 w-full max-w-md">
+  <Link href="/">
+    <Image
+      src="/logo.png"
+      alt="QuickFetch Logo"
+      width={200}
+      height={60}
+      className="w-auto h-auto cursor-pointer"
+    />
+  </Link>
+</div>
+
+
+        {/* Centered Content */}
+        <div className="w-full max-w-md space-y-8">
+          <div className="space-y-4">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900">
+              Welcome to
+            </h1>
+            <h2 className="text-4xl md:text-5xl font-bold">
+              <span className="text-orange-500">Quick</span>
+              <span className="text-gray-900">Fetch</span>
+            </h2>
+          </div>
+
+          <p className="text-gray-600 text-lg leading-relaxed">
+            Join a growing network of local food businesses managing orders and
+            customer experience all in one place.
+          </p>
+
+          <Link href="/auth/signup">
+            <Button variant="primary" size="lg" className="w-full sm:w-auto">
+              Get Started
+            </Button>
+          </Link>
+        </div>
+      </div>
+
+      {/* Right Side - Image */}
+      <div className="hidden lg:block relative">
+        <Image
+          src="/restaurant-team.png"
+          alt="Restaurant team collaborating"
+          fill
+          className="object-cover"
+          priority
+        />
+      </div>
+    </div>
   );
 }

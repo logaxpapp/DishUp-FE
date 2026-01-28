@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/input';
+import { ArrowLeft } from 'lucide-react';
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -14,6 +15,10 @@ export default function LoginPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     router.push('/auth/business-details');
+  };
+
+  const handleBack = () => {
+    router.back();
   };
 
   return (
@@ -63,16 +68,28 @@ export default function LoginPage() {
       <div className="flex items-center justify-center p-8 lg:p-16 bg-white relative">
         {/* Transparent Header for Mobile */}
         <div className="lg:hidden absolute top-0 left-0 w-full px-8 py-6">
-          <Image 
-            src="/logo.png" 
-            alt="QuickFetch Logo" 
-            width={180} 
-            height={54}
-            className="w-auto h-auto"
-          />
+           <Link href="/">
+    <Image
+      src="/logo.png"
+      alt="QuickFetch Logo"
+      width={200}
+      height={60}
+      className="w-auto h-auto cursor-pointer"
+    />
+  </Link>
         </div>
         
         <div className="w-full max-w-md space-y-8 mt-20 lg:mt-0">
+          {/* Back Button */}
+          <button
+            onClick={handleBack}
+            className="flex items-center gap-2 text-orange-600 hover:text-orange-700 transition-colors font-medium text-lg"
+            type="button"
+          >
+            <ArrowLeft size={24} />
+            <span>Back</span>
+          </button>
+
           {/* Header */}
           <div className="space-y-2">
             <h1 className="text-3xl font-bold text-gray-900">
