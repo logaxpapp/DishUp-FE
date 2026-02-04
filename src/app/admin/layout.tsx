@@ -1,18 +1,17 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { 
   MdDashboard, 
   MdShoppingCart, 
-  MdRestaurantMenu,
-  MdAttachMoney,
-  MdInventory,
-  MdLocalOffer,
-  MdTrendingUp,
-  MdPayment,
+  MdPayment, 
+  MdGavel,
+  MdAnalytics,
+  MdSettings,
+  MdPeople,
+  MdAdminPanelSettings,
   MdKeyboardArrowDown
 } from 'react-icons/md';
 
@@ -28,6 +27,8 @@ interface MenuItem {
   hasDropdown: boolean;
   subItems?: SubItem[];
 }
+ 
+
 
 export default function DashboardLayout({
   children,
@@ -50,54 +51,50 @@ export default function DashboardLayout({
   const menuItems: MenuItem[] = [
     {
       name: 'Dashboard',
-      href: '/dashboard',
+      href: '/admin',
       icon: MdDashboard,
       hasDropdown: false,
     },
     {
       name: 'Orders',
-      href: '/dashboard/orders',
+      href: '/admin/ordermanagement',
       icon: MdShoppingCart,
       hasDropdown: false,
     },
     {
-      name: 'Menu',
-      href: '/dashboard/menu',
-      icon: MdRestaurantMenu,
-      hasDropdown: false,
-    },
-    {
-      name: 'Pricing',
-      href: '/dashboard/pricing',
-      icon: MdAttachMoney,
-      hasDropdown: false,
-    },
-    {
-      name: 'Inventory',
-      href: '/dashboard/inventory',
-      icon: MdInventory,
-      hasDropdown: false,
-    },
-    {
-      name: 'Promotions',
-      href: '/dashboard/promotions',
-      icon: MdLocalOffer,
-      hasDropdown: true,
-      subItems: [
-        { name: 'Coupons', href: '/dashboard/promotions/coupons' },
-        { name: 'Sponsored Listing', href: '/dashboard/promotions/sponsored' },
-      ],
-    },
-    {
-      name: 'Analytics',
-      href: '/dashboard/analytics',
-      icon: MdTrendingUp,
-      hasDropdown: false,
-    },
-    {
-      name: 'Payouts',
-      href: '/dashboard/payouts',
+      name: 'Payment',
+      href: '/admin/paymentmanagement',
       icon: MdPayment,
+      hasDropdown: false,
+    },
+    {
+      name: 'Disputes',
+      href: '/admin/disputeresolution',
+      icon: MdGavel,
+      hasDropdown: false,
+    },
+    {
+      name: 'SLA Analytics',
+      href: '/admin/slaanalytics',
+      icon: MdAnalytics,
+      hasDropdown: false,
+    },
+    {
+      name: 'Global Config.',
+      href: '/admin/globalsettings',
+      icon: MdSettings,
+      hasDropdown: false,
+    },
+    {
+      name: 'User Management',
+      href: '/admin/usermanagement',
+      icon: MdPeople,
+      hasDropdown: false,
+    },
+    {
+      name: 'Sub-admins',
+      href: '/admin/subregionaladmin',
+      icon: MdAdminPanelSettings,
       hasDropdown: false,
     },
   ];
@@ -116,18 +113,15 @@ export default function DashboardLayout({
   return (
     <div className="flex min-h-screen bg-orange-50/30">
       {/* Sidebar - Exact Figma Specs: width 289px, Fixed position */}
-      <aside className="w-[289px] h-screen fixed left-0 top-0 bg-gradient-to-b from-orange-50 to-orange-100 border-r border-orange-200 flex flex-col">
-        {/* Logo */}
-        <div className="px-6 py-8 flex-shrink-0">
-          <Image
-            src="/logo.png"
-            alt="QickFetch Logo"
-            width={150}
-            height={45}
-            className="w-auto h-auto"
-            priority
-          />
-        </div>
+      <aside className="w-[289px] h-screen fixed left-0 top-0 bg-gradient-to-b from-orange-50 to-orange-100/50 border-r border-orange-200/50 flex flex-col">
+       {/* Logo */}
+<div className="px-6 py-8 flex-shrink-0">
+  <Link href="/" className="flex items-center gap-1 cursor-pointer">
+    <span className="text-3xl font-bold text-orange-500">Qick</span>
+    <span className="text-3xl font-bold text-gray-800">Fetch</span>
+  </Link>
+</div>
+
 
         {/* Navigation - Figma Specs: text color #8E98A8, font-size 20px, line-height 100% */}
         <nav className="flex-1 px-4 py-4 overflow-y-auto">
@@ -139,7 +133,7 @@ export default function DashboardLayout({
                     <button
                       type="button"
                       onClick={() => setIsPromotionsOpen(!isPromotionsOpen)}
-                      className={`w-full flex items-center gap-4 px-5 py-4 rounded-xl transition-all hover:bg-orange-200/40 text-[#8E98A8]`}
+                      className="w-full flex items-center gap-4 px-5 py-4 rounded-xl transition-all hover:bg-orange-200/40 text-[#8E98A8]"
                       style={{ fontFamily: 'Urbanist', fontSize: '20px', lineHeight: '100%', fontWeight: 400 }}
                     >
                       <item.icon className={`w-6 h-6 ${isActive(item.href) ? 'text-orange-500' : ''}`} />
@@ -184,18 +178,11 @@ export default function DashboardLayout({
         </nav>
 
         {/* Help Section - Always visible at bottom */}
-        <div className="p-4 m-4 bg-orange-500 rounded-2xl text-white flex-shrink-0">
-          <div className="relative w-32 h-32 mx-auto mb-4 -mt-12">
-            <Image
-              src="/plate.png"
-              alt="Need Help?"
-              width={128}
-              height={128}
-              className="w-full h-full object-contain rounded-full"
-            />
+        <div className="p-5 m-4 bg-gradient-to-br from-orange-400 to-orange-500 rounded-2xl text-white shadow-lg flex-shrink-0">
+          <div className="text-center">
+            <h3 className="font-semibold text-lg mb-1">Need Help?</h3>
+            <p className="text-sm text-orange-50">Contact Support</p>
           </div>
-          <h3 className="font-semibold text-center mb-2">Need Help?</h3>
-          <p className="text-sm text-center mb-4 text-orange-100">Contact Support</p>
         </div>
       </aside>
 
