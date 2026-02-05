@@ -13,6 +13,7 @@ import { logOut } from "@/store/slices/auth";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useAppSelector } from "@/hooks/useAppSelector";
+import { API_ENDPOINTS } from "@/constants/api";
 
 interface Props {
   children: ReactNode;
@@ -24,7 +25,6 @@ export const queryClient = new QueryClient({
     },
   },
 });
-const storageURL = "https://storage.michofat.com";
 
 export function QueryProvider({ children }: Props): JSX.Element {
   return (
@@ -154,7 +154,7 @@ export function ToastProvider(): JSX.Element {
 }
 
 export const uploadRequest = axios.create({
-  baseURL: storageURL,
+  baseURL: API_ENDPOINTS.FILE.UPLOAD_FILE,
   headers: {
     Accept: "application/json",
     "Content-Type": "multipart/form-data",

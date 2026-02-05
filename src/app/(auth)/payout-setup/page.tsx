@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/input';
-import Link from 'next/link';
+import React, { useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/input";
+import Link from "next/link";
 
 export default function PayoutSetupPage() {
   const router = useRouter();
 
   const [form, setForm] = useState({
-    bankName: '',
-    accountNumber: '',
-    routingNumber: '',
-    swiftCode: '',
+    bankName: "",
+    accountNumber: "",
+    routingNumber: "",
+    swiftCode: "",
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -23,10 +23,10 @@ export default function PayoutSetupPage() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-    
+
     // Clear error when user starts typing
     if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: '' }));
+      setErrors((prev) => ({ ...prev, [name]: "" }));
     }
   };
 
@@ -37,14 +37,14 @@ export default function PayoutSetupPage() {
   };
 
   const validateField = (name: string, value: string) => {
-    let error = '';
-    
+    let error = "";
+
     if (!value.trim()) {
       const fieldLabels: Record<string, string> = {
-        bankName: 'Bank name',
-        accountNumber: 'Account number',
-        routingNumber: 'Routing number',
-        swiftCode: 'SWIFT code',
+        bankName: "Bank name",
+        accountNumber: "Account number",
+        routingNumber: "Routing number",
+        swiftCode: "SWIFT code",
       };
       error = `${fieldLabels[name]} is required`;
     }
@@ -57,15 +57,18 @@ export default function PayoutSetupPage() {
     e.preventDefault();
 
     // Mark all fields as touched
-    const allTouched = Object.keys(form).reduce((acc, key) => ({
-      ...acc,
-      [key]: true,
-    }), {});
+    const allTouched = Object.keys(form).reduce(
+      (acc, key) => ({
+        ...acc,
+        [key]: true,
+      }),
+      {},
+    );
     setTouched(allTouched);
 
     // Validate all fields
     const newErrors: Record<string, string> = {};
-    
+
     Object.entries(form).forEach(([key, value]) => {
       const error = validateField(key, value);
       if (error) newErrors[key] = error;
@@ -79,7 +82,7 @@ export default function PayoutSetupPage() {
     }
 
     // Form is valid, proceed to menu upload
-    router.push('/auth/menu-upload');
+    router.push("/menu-upload");
   };
 
   return (
@@ -91,29 +94,29 @@ export default function PayoutSetupPage() {
           <div className="absolute top-6 left-0 right-0 flex justify-center">
             <div className="max-w-md w-full">
               <Link href="/">
-    <Image
-      src="/logo.png"
-      alt="QuickFetch Logo"
-      width={200}
-      height={60}
-      className="w-auto h-auto cursor-pointer"
-    />
-  </Link>
+                <Image
+                  src="/logo.png"
+                  alt="QuickFetch Logo"
+                  width={200}
+                  height={60}
+                  className="w-auto h-auto cursor-pointer"
+                />
+              </Link>
             </div>
           </div>
-          
+
           {/* Heading */}
           <div className="space-y-2">
             <h1 className="text-3xl font-bold text-gray-900">
               Set up your Payout Account.
             </h1>
           </div>
-          
+
           {/* Description */}
           <p className="text-gray-600 text-base leading-relaxed">
             We use this information to process secure payouts.
           </p>
-          
+
           {/* Payment Security Illustration */}
           <div className="relative w-full max-w-sm mx-auto">
             <Image
@@ -126,28 +129,26 @@ export default function PayoutSetupPage() {
           </div>
         </div>
       </div>
-      
+
       {/* Right Side - Form */}
       <div className="flex items-center justify-center p-8 lg:p-16 bg-white relative">
         {/* Transparent Header for Mobile */}
         <div className="lg:hidden absolute top-0 left-0 w-full px-8 py-6">
-          <Image 
-            src="/logo.png" 
-            alt="QuickFetch Logo" 
-            width={180} 
+          <Image
+            src="/logo.png"
+            alt="QuickFetch Logo"
+            width={180}
             height={54}
             className="w-auto h-auto"
           />
         </div>
-        
+
         <div className="w-full max-w-md space-y-8 mt-20 lg:mt-0">
           {/* Header */}
           <div className="space-y-2">
-            <h1 className="text-3xl font-bold text-gray-900">
-              Bank details
-            </h1>
+            <h1 className="text-3xl font-bold text-gray-900">Bank details</h1>
           </div>
-          
+
           {/* Form */}
           <form className="space-y-5" onSubmit={handleSubmit}>
             <div>
@@ -165,7 +166,7 @@ export default function PayoutSetupPage() {
                 <p className="text-red-500 text-sm mt-1">{errors.bankName}</p>
               )}
             </div>
-            
+
             <div>
               <Input
                 name="accountNumber"
@@ -178,10 +179,12 @@ export default function PayoutSetupPage() {
                 required
               />
               {touched.accountNumber && errors.accountNumber && (
-                <p className="text-red-500 text-sm mt-1">{errors.accountNumber}</p>
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.accountNumber}
+                </p>
               )}
             </div>
-            
+
             <div>
               <Input
                 name="routingNumber"
@@ -194,10 +197,12 @@ export default function PayoutSetupPage() {
                 required
               />
               {touched.routingNumber && errors.routingNumber && (
-                <p className="text-red-500 text-sm mt-1">{errors.routingNumber}</p>
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.routingNumber}
+                </p>
               )}
             </div>
-            
+
             <div>
               <Input
                 name="swiftCode"
@@ -213,11 +218,11 @@ export default function PayoutSetupPage() {
                 <p className="text-red-500 text-sm mt-1">{errors.swiftCode}</p>
               )}
             </div>
-            
-            <Button 
+
+            <Button
               type="submit"
-              variant="primary" 
-              size="lg" 
+              variant="primary"
+              size="lg"
               className="w-full mt-6"
             >
               Continue

@@ -17,9 +17,7 @@ export default function Header() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-white/95 backdrop-blur-md shadow-sm"
-          : "bg-transparent"
+        scrolled ? "bg-white/95 backdrop-blur-md shadow-sm" : "bg-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-16">
@@ -52,7 +50,7 @@ export default function Header() {
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
             </a>
             <a
-              href="/auth/login"
+              href="/login"
               className="text-gray-900 font-medium text-sm relative group"
             >
               Login

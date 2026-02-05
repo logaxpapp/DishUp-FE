@@ -25,7 +25,7 @@ export function useLoginMutation() {
       if (response.isProfileCompleted) {
         router.push("/dashboard");
       } else {
-        router.push("/auth/business-details");
+        router.push("/business-details");
       }
     },
 
@@ -51,7 +51,7 @@ export function useRegisterMutation(email: string) {
       );
 
       customToast.success("Registration successful");
-      router.push("/auth/verify-code");
+      router.push("/verify-code");
     },
   });
 }
@@ -63,7 +63,7 @@ export function useActivateEmailMutation() {
     onSuccess: (response: any) => {
       if (response) {
         customToast.success("Verification code has been resent to your email");
-        router.push("/auth/login");
+        router.push("/login");
       }
     },
     onError: () => {},
@@ -96,7 +96,7 @@ export function useForgotPasswordMutation(email: string) {
           email,
           token: response?.token,
         });
-        router.push("/auth/set-password");
+        router.push("/set-password");
       }
     },
     onError: () => {},
@@ -111,7 +111,7 @@ export function useResetPasswordMutation() {
       if (response) {
         customToast.success("Password reset successful");
 
-        router.push("/auth/password-reset-success");
+        router.push("/password-reset-success");
       }
     },
     onError: () => {},

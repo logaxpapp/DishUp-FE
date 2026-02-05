@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { 
-  IUserProfile,
-} from "@/interfaces/auth";
+import { IUserProfile } from "@/interfaces/auth";
 import { ILoginPayload } from "@/models/auth";
 import { login } from "@/services/auth";
 import { customToast } from "@/helpers/customToast";
@@ -23,8 +21,8 @@ export const _login = createAsyncThunk(
 interface authState {
   token: string | null;
   user: IUserProfile | null;
-  isProfileCompleted:boolean;
-  role: "RESTAURANT" | "ADMIN" | "USER"|"";
+  isProfileCompleted: boolean;
+  role: "RESTAURANT" | "ADMIN" | "USER" | "";
   loading: boolean;
   error: boolean;
   invalidSession: boolean;
@@ -33,8 +31,8 @@ interface authState {
 const initialState: authState = {
   token: null,
   user: null,
-  isProfileCompleted:false,
-  role:  null,
+  isProfileCompleted: false,
+  role: null,
   loading: false,
   error: false,
   invalidSession: false,
@@ -59,17 +57,14 @@ export const auth = createSlice({
       }: PayloadAction<{
         accessToken: string;
         userInfo: IUserProfile;
-        isProfileCompleted:boolean;
-        role: "RESTAURANT" | "ADMIN" | "USER" | ""
+        isProfileCompleted: boolean;
+        role: "RESTAURANT" | "ADMIN" | "USER" | "";
       }>,
     ) => {
-      console.log({ payload });
-
       state.user = payload?.userInfo || null;
       state.token = payload?.accessToken || "";
-     state.isProfileCompleted = payload?.isProfileCompleted;
+      state.isProfileCompleted = payload?.isProfileCompleted;
       state.role = payload?.role || "";
-
     },
     setRegisterUser: (
       state,
