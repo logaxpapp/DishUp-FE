@@ -11,7 +11,7 @@ export default function WelcomePage() {
   
        {/* Logo */}
 <div className="absolute top-8 left-1/2 -translate-x-1/2 w-full max-w-md">
-  <Link href="/">
+  <Link href="/home">
     <Image
       src="/logo.png"
       alt="QuickFetch Logo"
