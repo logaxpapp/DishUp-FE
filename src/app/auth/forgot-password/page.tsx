@@ -1,40 +1,42 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/input';
-import { ArrowLeft } from 'lucide-react';
-import Link from 'next/link';
+import React, { useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/input";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
+import { useForgotPasswordMutation } from "@/hooks/useAuthQuery";
 
 export default function ForgotPasswordPage() {
   const router = useRouter();
-  
-  const [email, setEmail] = useState('');
-  const [error, setError] = useState('');
+
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
   const [touched, setTouched] = useState(false);
+  const forgotPassword = useForgotPasswordMutation(email);
 
   const validateEmail = (value: string) => {
     if (!value.trim()) {
-      return 'Email address is required';
+      return "Email address is required";
     }
-    
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(value)) {
-      return 'Please enter a valid email address';
+      return "Please enter a valid email address";
     }
-    
-    return '';
+
+    return "";
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setEmail(value);
-    
+
     // Clear error when user starts typing
     if (error) {
-      setError('');
+      setError("");
     }
   };
 
@@ -46,17 +48,17 @@ export default function ForgotPasswordPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     setTouched(true);
     const validationError = validateEmail(email);
-    
+
     if (validationError) {
       setError(validationError);
       return;
     }
-
-    // Form is valid, proceed to verify code page
-    router.push('/auth/verify-code');
+    forgotPassword.mutate({
+      email,
+    });
   };
 
   const handleBack = () => {
@@ -71,30 +73,30 @@ export default function ForgotPasswordPage() {
           {/* Logo at top */}
           <div className="absolute top-6 left-0 right-0 flex justify-center">
             <div className="max-w-md w-full">
-               <Link href="/">
-    <Image
-      src="/logo.png"
-      alt="QuickFetch Logo"
-      width={200}
-      height={60}
-      className="w-auto h-auto cursor-pointer"
-    />
-  </Link>
+              <Link href="/">
+                <Image
+                  src="/logo.png"
+                  alt="QuickFetch Logo"
+                  width={200}
+                  height={60}
+                  className="w-auto h-auto cursor-pointer"
+                />
+              </Link>
             </div>
           </div>
-          
+
           {/* Heading */}
           <div className="space-y-2">
             <h1 className="text-3xl font-bold text-gray-900">
               Restaurant Partner Authentication Screen
             </h1>
           </div>
-          
+
           {/* Description */}
           <p className="text-gray-600 text-base leading-relaxed">
             For your security, please verify your identity.
           </p>
-          
+
           {/* Security Illustration */}
           <div className="relative w-full max-w-sm mx-auto">
             <Image
@@ -107,20 +109,20 @@ export default function ForgotPasswordPage() {
           </div>
         </div>
       </div>
-      
+
       {/* Right Side - Form */}
       <div className="flex items-center justify-center p-8 lg:p-16 bg-white relative">
         {/* Transparent Header for Mobile */}
         <div className="lg:hidden absolute top-0 left-0 w-full px-8 py-6">
-          <Image 
-            src="/logo.png" 
-            alt="QuickFetch Logo" 
-            width={180} 
+          <Image
+            src="/logo.png"
+            alt="QuickFetch Logo"
+            width={180}
             height={54}
             className="w-auto h-auto"
           />
         </div>
-        
+
         <div className="w-full max-w-md space-y-8 mt-20 lg:mt-0">
           {/* Back Button */}
           <button
@@ -141,7 +143,7 @@ export default function ForgotPasswordPage() {
               Don't worry, enter your email below to recover your password.
             </p>
           </div>
-          
+
           {/* Form */}
           <form className="space-y-5" onSubmit={handleSubmit}>
             <div>
@@ -159,12 +161,14 @@ export default function ForgotPasswordPage() {
                 <p className="text-red-500 text-sm mt-1">{error}</p>
               )}
             </div>
-            
-            <Button 
+
+            <Button
               type="submit"
-              variant="primary" 
-              size="lg" 
+              variant="primary"
+              size="lg"
               className="w-full mt-6"
+              loading={forgotPassword.isPending}
+              disabled={forgotPassword.isPending}
             >
               Submit
             </Button>
@@ -175,7 +179,9 @@ export default function ForgotPasswordPage() {
                 <div className="w-full border-t border-gray-300"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-white text-gray-500">Or login with</span>
+                <span className="px-4 bg-white text-gray-500">
+                  Or login with
+                </span>
               </div>
             </div>
 
@@ -210,7 +216,7 @@ export default function ForgotPasswordPage() {
                 className="w-14 h-14 rounded-full border border-gray-300 flex items-center justify-center hover:border-orange-400 hover:bg-orange-50 transition-colors"
               >
                 <svg className="w-6 h-6" fill="#1877F2" viewBox="0 0 24 24">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                 </svg>
               </button>
 
@@ -219,7 +225,7 @@ export default function ForgotPasswordPage() {
                 className="w-14 h-14 rounded-full border border-gray-300 flex items-center justify-center hover:border-orange-400 hover:bg-orange-50 transition-colors"
               >
                 <svg className="w-6 h-6" fill="#000000" viewBox="0 0 24 24">
-                  <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+                  <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
                 </svg>
               </button>
             </div>
