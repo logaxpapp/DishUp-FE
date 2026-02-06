@@ -1,5 +1,6 @@
-import { Urbanist } from "next/font/google";
 import "./globals.css";
+import { Urbanist } from "next/font/google";
+import type { Metadata } from "next";
 
 const urbanist = Urbanist({
   subsets: ["latin"],
@@ -8,6 +9,14 @@ const urbanist = Urbanist({
   display: "swap",
 });
 
+export const metadata: Metadata = {
+  title: "LogaDash",
+  description: "LogaDash — restaurant delivery management platform",
+  icons: {
+    icon: "/logo3.png", // favicon
+  },
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -15,7 +24,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${urbanist.variable} overflow-x-hidden`}>
-      <body className={`${urbanist.className} `}>
+      <body className={urbanist.className}>
         {children}
       </body>
     </html>
