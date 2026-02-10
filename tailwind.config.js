@@ -12,6 +12,9 @@ module.exports = {
           400: '#003366',
           500: '#ff6b00',
         },
+        fontFamily: {
+        sans: ['var(--font-urbanist)', 'sans-serif'],
+      },
       },
     },
   },

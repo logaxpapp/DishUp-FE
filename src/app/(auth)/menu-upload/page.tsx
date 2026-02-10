@@ -182,14 +182,16 @@ export default function MenuUploadPage() {
             </button>
 
             {/* Proceed Button */}
-            <Button 
-              type="button"
-              variant="primary" 
-              size="lg" 
-              className="w-full mt-6"
-            >
-              Proceed to Dashboard
-            </Button>
+     <Button 
+  type="button"
+  variant="primary" 
+  size="lg" 
+  className="w-full mt-6"
+  onClick={() => router.push('/dashboard')}
+>
+  Proceed to Dashboard
+</Button>
+
           </div>
         </div>
       </div>
