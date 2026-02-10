@@ -40,17 +40,16 @@ export function useRegisterMutation(email: string) {
 
   return useMutation({
     mutationFn: register,
-    onSuccess: (response: any) => {
+    onSuccess: (response: any) => {},
+    onSettled: (response) => {
       const token = response?.token;
-
+      customToast.success("Registration successful");
       dispatch(
         setRegisterUser({
           email,
           token,
         }),
       );
-
-      customToast.success("Registration successful");
       router.push("/verify-code");
     },
   });
@@ -90,7 +89,6 @@ export function useForgotPasswordMutation(email: string) {
     mutationFn: forgotPassword,
     onSuccess: (response: any) => {
       if (response) {
-        console.log(response);
         customToast.success("Email sent successful");
         setObject("authFlow", {
           email,

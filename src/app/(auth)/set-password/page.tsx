@@ -18,9 +18,6 @@ export default function SetPasswordPage() {
   const authFlow = getObject<AuthFlowData>("authFlow");
   const resetPassword = useResetPasswordMutation();
 
-  console.log(authFlow?.email);
-  console.log(authFlow?.token);
-
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 

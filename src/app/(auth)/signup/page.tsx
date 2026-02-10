@@ -31,8 +31,6 @@ export default function SignupPage() {
   const onSubmit = (data: any) => {
     const payload = { ...data, agreeToTermAndCondition: true };
     register.mutate(payload);
-
-    console.log(payload);
   };
 
   return (

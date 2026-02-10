@@ -18,6 +18,7 @@ import {
 import CustomInput from "@/components/FormElements/Input";
 import { uploadRequest } from "@/utils/Providers";
 import { API_ENDPOINTS } from "@/constants/api";
+import { useCompleteBusinessInfoMutation } from "@/hooks/useUserQuery";
 
 export default function BusinessDetailsPage() {
   const {
@@ -35,6 +36,7 @@ export default function BusinessDetailsPage() {
   const { data: allBanks } = useGetAllBanksQuery();
   const { data: countries } = useGetAllCountryQuery();
   const { data: states } = useGetAllStatesQuery(selectedState);
+  const completeInfo = useCompleteBusinessInfoMutation();
 
   const banks = useMemo(
     () => allBanks?.map((b) => ({ label: b?.name, value: b?.code })) || [],
@@ -74,13 +76,10 @@ export default function BusinessDetailsPage() {
 
       const finalPayload = {
         ...data,
-        businessLiscenseUrl: uploadedUrl,
+        businessLiscence: uploadedUrl,
       };
 
-      console.log("FINAL SUBMISSION DATA 👉", finalPayload);
-
-      // C. Call your final profile completion API here...
-      // await completeProfile(finalPayload);
+      completeInfo.mutate(finalPayload);
     } catch (error) {
       console.error("Submission failed", error);
       setLicenseError("Failed to upload image. Please try again.");
@@ -136,7 +135,7 @@ export default function BusinessDetailsPage() {
                 <CustomInput
                   {...field}
                   value={field?.value?.toString() ?? ""}
-                  label="Zip Code"
+                  label="Business Name"
                   placeholder="Enter your busness name"
                   necessary
                   status={fieldState.error ? "error" : ""}
@@ -166,7 +165,7 @@ export default function BusinessDetailsPage() {
               render={({ field, fieldState }) => (
                 <div>
                   <label className="text-[#0D1821] text-[14px] font-medium">
-                    Country
+                    Country <span className="text-red-500">*</span>
                   </label>
                   <Select
                     {...field}
@@ -201,8 +200,8 @@ export default function BusinessDetailsPage() {
               control={control}
               render={({ field, fieldState }) => (
                 <div>
-                  <label className="text-[#0D1821] text-[12px] font-medium">
-                    State
+                  <label className="text-[#0D1821] text-[14px] font-medium">
+                    State <span className="text-red-500">*</span>
                   </label>
 
                   <Select
@@ -411,9 +410,12 @@ export default function BusinessDetailsPage() {
                 type="submit"
                 size="lg"
                 className="w-full"
-                disabled={isSubmitting}
+                disabled={isSubmitting || completeInfo.isPending}
+                loading={isSubmitting || completeInfo.isPending}
               >
-                {isSubmitting ? "Uploading & Saving..." : "Continue"}
+                {isSubmitting || completeInfo.isPending
+                  ? "Uploading & Saving..."
+                  : "Continue"}
               </Button>
             </div>
           </form>

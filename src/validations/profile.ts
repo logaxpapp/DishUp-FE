@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 export const businessDetailsSchema = yup.object({
-  countryCode: yup.string().required("Country code is required"),
+  countryCode: yup.string().required("Country is required"),
   stateId: yup.string().required("State is required"),
   city: yup.string().required("City is required"),
   businessName: yup.string().required("Business name is required"),

@@ -13,7 +13,7 @@ export default function AuthLayout({
   const router = useRouter();
 
   useEffect(() => {
-    if (token && isProfileCompleted) {
+    if (token && !isProfileCompleted) {
       router.push("/business-details");
       return;
     }

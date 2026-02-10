@@ -18,7 +18,9 @@ export default function VerifyCodePage() {
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
   const [touched, setTouched] = useState(false);
-  const { user, token } = useAppSelector((state) => state.auth);
+  const { user, temporalToken, temporalEmail } = useAppSelector(
+    (state) => state.auth,
+  );
   const activateMail = useActivateEmailMutation();
   const resendMail = useResendEmailMutation();
 
@@ -53,7 +55,7 @@ export default function VerifyCodePage() {
   const handleResend = () => {
     resendMail.mutate(
       {
-        email: user?.profile?.email,
+        email: temporalEmail,
       },
       {
         onSuccess: () => {
@@ -75,9 +77,9 @@ export default function VerifyCodePage() {
       return;
     }
     activateMail.mutate({
-      email: user?.profile?.email,
+      email: temporalEmail,
       code,
-      token,
+      token: temporalToken,
     });
   };
 
@@ -145,7 +147,7 @@ export default function VerifyCodePage() {
             <h1 className="text-3xl font-bold text-gray-900">Verify Code</h1>
             <p className="text-gray-600">
               An authentication code has been sent to your{" "}
-              <span className="font-bold">{user?.profile?.email}</span> .
+              <span className="font-bold">{temporalEmail}</span> .
             </p>
           </div>
 

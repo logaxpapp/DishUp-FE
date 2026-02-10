@@ -19,4 +19,7 @@ export const API_ENDPOINTS = {
   FILE: {
     UPLOAD_FILE: `${baseUrl}/re/file`,
   },
+  USER: {
+    COMPLETE_PROFILE: `${baseUrl}/re/user/complete-profile`,
+  },
 };

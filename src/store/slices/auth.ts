@@ -20,6 +20,8 @@ export const _login = createAsyncThunk(
 
 interface authState {
   token: string | null;
+  temporalToken: string | null;
+  temporalEmail: string | null;
   user: IUserProfile | null;
   isProfileCompleted: boolean;
   role: "RESTAURANT" | "ADMIN" | "USER" | "";
@@ -30,6 +32,8 @@ interface authState {
 
 const initialState: authState = {
   token: null,
+  temporalToken: null,
+  temporalEmail: null,
   user: null,
   isProfileCompleted: false,
   role: null,
@@ -71,9 +75,12 @@ export const auth = createSlice({
       action: PayloadAction<{ email: string; token: string }>,
     ) => {
       const { email, token } = action.payload;
+      state.temporalToken = token;
+      state.temporalEmail = email;
+    },
 
-      state.token = token;
-      state.user.profile.email = email;
+    completeProfile: (state, action: PayloadAction<boolean>) => {
+      state.isProfileCompleted = action.payload;
     },
 
     partialLogOut: (state) => {
@@ -84,6 +91,7 @@ export const auth = createSlice({
     },
     clearToken: (state) => {
       state.token = null;
+      state.temporalToken = null;
       localStorage.clear();
     },
   },
@@ -96,5 +104,6 @@ export const {
   clearToken,
   setUser,
   setRegisterUser,
+  completeProfile,
 } = auth.actions;
 export default auth.reducer;

@@ -47,8 +47,6 @@ export function AxiosProvider({ children }: Props): JSX.Element {
     },
 
     async function (error: any) {
-      console.log(error);
-
       if (
         error.response?.data.message === "jwt expired" ||
         error.response?.data.message === "Token is not valid!" ||

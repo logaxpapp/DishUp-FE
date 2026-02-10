@@ -102,7 +102,16 @@ export default function LoginPage() {
 
           {/* Header */}
           <div className="space-y-2">
-            <h1 className="text-3xl font-bold text-gray-900">Login</h1>
+            <h1 className="text-3xl font-bold text-gray-900">Sign In</h1>
+            <p className="text-gray-600">
+              Dont have an account?{" "}
+              <Link
+                href="/signup"
+                className="text-orange-500 hover:text-orange-600 font-medium"
+              >
+                Register
+              </Link>
+            </p>
           </div>
 
           {/* Form */}

@@ -38,7 +38,7 @@ export default function WelcomePage() {
             customer experience all in one place.
           </p>
 
-          <Link href="/signup">
+          <Link href="/login">
             <Button variant="primary" size="lg" className="w-full sm:w-auto">
               Get Started
             </Button>
