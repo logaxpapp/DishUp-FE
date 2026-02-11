@@ -178,12 +178,16 @@ export default function Header() {
                       Download App
                     </motion.button>
 
-                    <motion.button
-                      whileTap={{ scale: 0.97 }}
-                      className="w-full rounded-xl border border-gray-200 bg-white py-4 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors"
-                    >
-                      Become a Partner
-                    </motion.button>
+                <Link href="/auth/get-started">
+  <motion.button
+    whileHover={{ scale: 1.04 }}
+    whileTap={{ scale: 0.97 }}
+    className="rounded-xl border border-gray-200 bg-white/80 px-6 py-3 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-50 transition-colors"
+  >
+    Become a Partner
+  </motion.button>
+</Link>
+
                   </div>
                 </div>
               </div>
