@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { 
   MdDashboard, 
   MdShoppingCart, 
@@ -13,7 +13,8 @@ import {
   MdLocalOffer,
   MdTrendingUp,
   MdPayment,
-  MdKeyboardArrowDown
+  MdKeyboardArrowDown,
+  MdLogout
 } from 'react-icons/md';
 
 interface SubItem {
@@ -35,6 +36,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [isPromotionsOpen, setIsPromotionsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -46,6 +48,11 @@ export default function DashboardLayout({
       setIsPromotionsOpen(true);
     }
   }, [pathname]);
+
+  const handleLogout = () => {
+    // Fisto
+    router.push('/login');
+  };
 
   const menuItems: MenuItem[] = [
     {
@@ -117,16 +124,18 @@ export default function DashboardLayout({
     <div className="flex min-h-screen bg-orange-50/30">
       {/* Sidebar - Exact Figma Specs: width 289px, Fixed position */}
       <aside className="w-[289px] h-screen fixed left-0 top-0 bg-gradient-to-b from-orange-50 to-orange-100 border-r border-orange-200 flex flex-col">
-        {/* Logo */}
-        <div className="px-6 py-8 flex-shrink-0">
-          <Image
-            src="/logo.png"
-            alt="QickFetch Logo"
-            width={150}
-            height={45}
-            className="w-auto h-auto"
-            priority
-          />
+        {/* Logo — links to home, larger size */}
+        <div className="px-6 py-6 flex-shrink-0">
+          <Link href="/">
+            <Image
+              src="/logo.png"
+              alt="QickFetch Logo"
+              width={240}
+              height={72}
+              className="w-[150px] h-auto"
+              priority
+            />
+          </Link>
         </div>
 
         {/* Navigation - Figma Specs: text color #8E98A8, font-size 20px, line-height 100% */}
@@ -182,6 +191,19 @@ export default function DashboardLayout({
             ))}
           </ul>
         </nav>
+
+        {/* Logout Button — above help section */}
+        <div className="px-4 pb-2 flex-shrink-0">
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="w-full flex items-center gap-4 px-5 py-4 rounded-xl transition-all hover:bg-red-50 text-[#a51212] hover:text-red-500"
+            style={{ fontFamily: 'Urbanist', fontSize: '20px', lineHeight: '100%', fontWeight: 400 }}
+          >
+            <MdLogout className="w-6 h-6 flex-shrink-0" />
+            <span>Logout</span>
+          </button>
+        </div>
 
         {/* Help Section - Always visible at bottom */}
         <div className="p-4 m-4 bg-orange-500 rounded-2xl text-white flex-shrink-0">

@@ -111,51 +111,65 @@ export default function DownloadApp() {
               Experience lightning-fast delivery, live tracking, exclusive deals, and more — all in one powerful app.
             </p>
 
-            {/* Store Buttons – premium style */}
-            <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start items-center lg:items-start">
+            {/* Store Buttons – distinct styles per platform */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center lg:items-start">
+
+              {/* Google Play – dark with subtle Google-color shimmer */}
               <motion.a
-                href="https://play.google.com/store/apps/details?id=com.LogaDash" // ← replace with real link
+                href="https://play.google.com/store/apps/details?id=com.LogaDash"
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={{ scale: 1.08, y: -6, boxShadow: "0 20px 40px rgba(0,0,0,0.2)" }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.06, y: -5 }}
+                whileTap={{ scale: 0.97 }}
                 variants={itemVariants}
-                className="inline-flex items-center gap-4 bg-black text-white rounded-2xl px-7 py-5 shadow-2xl hover:shadow-3xl transition-all duration-300 min-w-[260px] group"
+                style={{ boxShadow: "0 8px 32px rgba(0,0,0,0.22)" }}
+                className="relative inline-flex items-center gap-4 bg-gray-950 text-white rounded-2xl px-6 py-4 transition-all duration-300 min-w-[230px] overflow-hidden group"
               >
+                {/* Rainbow shimmer on hover */}
+                <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-[#EA4335]/20 via-[#FBBC05]/20 to-[#34A853]/20 pointer-events-none rounded-2xl" />
                 <Image
                   src="/google-play.png"
-                  alt="Google Play Badge"
-                  width={48}
-                  height={48}
-                  className="w-12 h-12 object-contain"
+                  alt="Google Play"
+                  width={40}
+                  height={40}
+                  className="w-10 h-10 object-contain relative z-10 flex-shrink-0"
                 />
-                <div className="text-left">
-                  <div className="text-sm opacity-80">GET IT ON</div>
-                  <div className="text-2xl font-bold tracking-tight">Google Play</div>
+                <div className="text-left relative z-10">
+                  <div className="text-[10px] font-semibold tracking-[0.2em] uppercase text-gray-400 mb-0.5">
+                    Get it on
+                  </div>
+                  <div className="text-[19px] font-bold tracking-tight leading-none">Google Play</div>
                 </div>
               </motion.a>
 
+              {/* App Store – clean white card so black Apple logo is fully visible */}
               <motion.a
-                href="https://apps.apple.com/app/LogaDash" // ← replace with real link
+                href="https://apps.apple.com/app/LogaDash"
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={{ scale: 1.08, y: -6, boxShadow: "0 20px 40px rgba(0,0,0,0.2)" }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.06, y: -5 }}
+                whileTap={{ scale: 0.97 }}
                 variants={itemVariants}
-                className="inline-flex items-center gap-4 bg-black text-white rounded-2xl px-7 py-5 shadow-2xl hover:shadow-3xl transition-all duration-300 min-w-[260px] group"
+                style={{ boxShadow: "0 8px 32px rgba(251,146,60,0.18), 0 2px 8px rgba(0,0,0,0.08)" }}
+                className="relative inline-flex items-center gap-4 bg-white text-gray-900 rounded-2xl px-6 py-4 border border-orange-100 transition-all duration-300 min-w-[230px] overflow-hidden group"
               >
+                {/* Warm orange glow on hover */}
+                <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-orange-50 to-amber-50 pointer-events-none rounded-2xl" />
                 <Image
                   src="/app-store.png"
-                  alt="App Store Badge"
-                  width={48}
-                  height={48}
-                  className="w-12 h-12 object-contain"
+                  alt="App Store"
+                  width={40}
+                  height={40}
+                  className="w-10 h-10 object-contain relative z-10 flex-shrink-0"
                 />
-                <div className="text-left">
-                  <div className="text-sm opacity-80">Download on the</div>
-                  <div className="text-2xl font-bold tracking-tight">App Store</div>
+                <div className="text-left relative z-10">
+                  <div className="text-[10px] font-semibold tracking-[0.2em] uppercase text-gray-400 mb-0.5">
+                    Download on the
+                  </div>
+                  <div className="text-[19px] font-bold tracking-tight leading-none">App Store</div>
                 </div>
               </motion.a>
+
             </div>
 
             {/* QR Code – modern & clean */}
@@ -166,7 +180,7 @@ export default function DownloadApp() {
               <p className="text-base font-medium text-gray-700">Scan to download instantly</p>
               <div className="bg-white/80 backdrop-blur-sm p-4 rounded-2xl shadow-xl border border-gray-200/50">
                 <Image
-                  src="/qr-code-placeholder.png" // ← replace with real QR
+                  src="/qr-code-placeholder.png"
                   alt="LogaDash app QR code"
                   width={160}
                   height={160}

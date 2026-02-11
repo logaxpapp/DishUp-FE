@@ -1,13 +1,29 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/Button";  
+import { useRouter } from "next/navigation";
+import { useAppSelector } from "@/hooks/useAppSelector";
 
 export default function WelcomePage() {
   const reduce = useReducedMotion();
+  const router = useRouter();
+  const { token, user, isProfileCompleted } = useAppSelector(
+    (state) => state.auth,
+  );
+  useEffect(() => {
+    if (token && isProfileCompleted) {
+      router.push("/business-details");
+      return;
+    }
+
+    if (token && isProfileCompleted) {
+      router.push("/dashboard");
+    }
+  }, [token, isProfileCompleted, router]);
 
   const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -51,20 +67,25 @@ export default function WelcomePage() {
             <div className="absolute inset-0 bg-[radial-gradient(60%_60%_at_35%_25%,rgba(255,119,0,0.10),transparent_60%),radial-gradient(55%_55%_at_70%_65%,rgba(17,24,39,0.06),transparent_60%)]" />
             <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-white to-transparent" />
           </div>
- 
+
+          {/* LOGO (pixel-perfect placement) */}
           <motion.div
             variants={brand}
             initial="hidden"
             animate="visible"
-            className="absolute left-5 top-4 sm:left-20 sm:top-5 lg:left-40 lg:top-6"
+            className="absolute left-5 top-5 sm:left-8 sm:top-7 lg:left-14 lg:top-10"
           >
-            <Link href="/home" aria-label="Go to LogaDash homepage" className="inline-flex">
+            <Link
+              href="/home"
+              aria-label="Go to LogaDash homepage"
+              className="inline-flex"
+            >
               <Image
                 src="/logo3.png"
                 alt="LogaDash Logo"
-                width={400}
-                height={120}
-                className="h-24 w-auto sm:h-32 lg:h-40"
+                width={220}
+                height={70}
+                className="h-10 w-auto sm:h-18 lg:h-24"
                 priority
               />
             </Link>
@@ -78,7 +99,7 @@ export default function WelcomePage() {
             variants={container}
           >
             {/* badge */}
-            <motion.div variants={item} className="mt-20 sm:mt-24 lg:mt-0">
+            <motion.div variants={item} className="mt-14 sm:mt-16 lg:mt-0">
               <div className="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-white/80 px-4 py-2 text-xs sm:text-sm font-semibold text-gray-800 shadow-sm backdrop-blur">
                 <span className="h-2 w-2 rounded-full bg-orange-500" />
                 Restaurants • Riders • Customers
@@ -115,7 +136,7 @@ export default function WelcomePage() {
               variants={item}
               className="mt-9 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4"
             >
-              <Link href="/auth/signup" className="sm:flex-1">
+              <Link href="/signup" className="sm:flex-1">
                 <Button
                   variant="primary"
                   size="lg"
@@ -125,7 +146,7 @@ export default function WelcomePage() {
                 </Button>
               </Link>
 
-              <Link href="/auth/login" className="sm:flex-1">
+              <Link href="/login" className="sm:flex-1">
                 <Button
                   variant="outline"
                   size="lg"
@@ -174,7 +195,9 @@ export default function WelcomePage() {
           <motion.div
             initial={reduce ? { opacity: 1 } : { opacity: 0, y: 22 }}
             animate={reduce ? { opacity: 1 } : { opacity: 1, y: 0 }}
-            transition={reduce ? { duration: 0.1 } : { duration: 0.7, ease, delay: 0.35 }}
+            transition={
+              reduce ? { duration: 0.1 } : { duration: 0.7, ease, delay: 0.35 }
+            }
             className="absolute bottom-10 right-10 rounded-2xl bg-white/90 backdrop-blur-md px-6 py-4 shadow-xl border border-white/30"
           >
             <p className="text-sm font-semibold text-gray-900">
@@ -187,3 +210,4 @@ export default function WelcomePage() {
     </div>
   );
 }
+

@@ -72,18 +72,20 @@ export default function Header() {
           <nav className="hidden md:flex items-center gap-10 lg:gap-12">
             <NavLink href="#features">Features</NavLink>
             <NavLink href="#how-it-works">How It Works</NavLink>
-            <NavLink href="/auth/login">Login</NavLink>
+            <NavLink href="/login">Login</NavLink>
           </nav>
 
           {/* Desktop CTAs */}
           <div className="hidden md:flex items-center gap-4">
-            <motion.button
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.97 }}
-              className="rounded-xl border border-gray-200 bg-white/80 px-6 py-3 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-50 transition-colors"
-            >
-              Become a Partner
-            </motion.button>
+          <Link href="/get-started">
+  <motion.button
+    whileHover={{ scale: 1.04 }}
+    whileTap={{ scale: 0.97 }}
+    className="rounded-xl border border-gray-200 bg-white/80 px-6 py-3 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-50 transition-colors"
+  >
+    Become a Partner
+  </motion.button>
+</Link>
 
             <motion.button
               whileHover={{ scale: 1.05 }}
