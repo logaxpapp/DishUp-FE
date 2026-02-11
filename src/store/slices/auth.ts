@@ -52,6 +52,10 @@ export const auth = createSlice({
       state.loading = false;
       state.error = false;
       state.invalidSession = false;
+      state.temporalEmail = null;
+      state.temporalToken = null;
+      state.role = null;
+      state.isProfileCompleted = false;
       localStorage.clear();
     },
     setUser: (

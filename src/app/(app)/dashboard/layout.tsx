@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { 
-  MdDashboard, 
-  MdShoppingCart, 
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import {
+  MdDashboard,
+  MdShoppingCart,
   MdRestaurantMenu,
   MdAttachMoney,
   MdInventory,
@@ -14,8 +14,10 @@ import {
   MdTrendingUp,
   MdPayment,
   MdKeyboardArrowDown,
-  MdLogout
-} from 'react-icons/md';
+  MdLogout,
+} from "react-icons/md";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { logOut } from "@/store/slices/auth";
 
 interface SubItem {
   name: string;
@@ -39,78 +41,79 @@ export default function DashboardLayout({
   const router = useRouter();
   const [isPromotionsOpen, setIsPromotionsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const dispatch = useAppDispatch();
 
   // Prevent hydration mismatch
   useEffect(() => {
     setMounted(true);
     // Auto-expand Promotions if we're on a promotions page
-    if (pathname.startsWith('/dashboard/promotions')) {
+    if (pathname.startsWith("/dashboard/promotions")) {
       setIsPromotionsOpen(true);
     }
   }, [pathname]);
 
   const handleLogout = () => {
-    // Fisto
-    router.push('/login');
+    dispatch(logOut());
+    router.push("/login");
   };
 
   const menuItems: MenuItem[] = [
     {
-      name: 'Dashboard',
-      href: '/dashboard',
+      name: "Dashboard",
+      href: "/dashboard",
       icon: MdDashboard,
       hasDropdown: false,
     },
     {
-      name: 'Orders',
-      href: '/dashboard/orders',
+      name: "Orders",
+      href: "/dashboard/orders",
       icon: MdShoppingCart,
       hasDropdown: false,
     },
     {
-      name: 'Menu',
-      href: '/dashboard/menu',
+      name: "Menu",
+      href: "/dashboard/menu",
       icon: MdRestaurantMenu,
       hasDropdown: false,
     },
     {
-      name: 'Pricing',
-      href: '/dashboard/pricing',
+      name: "Pricing",
+      href: "/dashboard/pricing",
       icon: MdAttachMoney,
       hasDropdown: false,
     },
     {
-      name: 'Inventory',
-      href: '/dashboard/inventory',
+      name: "Inventory",
+      href: "/dashboard/inventory",
       icon: MdInventory,
       hasDropdown: false,
     },
     {
-      name: 'Promotions',
-      href: '/dashboard/promotions',
+      name: "Promotions",
+      href: "/dashboard/promotions",
       icon: MdLocalOffer,
       hasDropdown: true,
       subItems: [
-        { name: 'Coupons', href: '/dashboard/promotions/coupons' },
-        { name: 'Sponsored Listing', href: '/dashboard/promotions/sponsored' },
+        { name: "Coupons", href: "/dashboard/promotions/coupons" },
+        { name: "Sponsored Listing", href: "/dashboard/promotions/sponsored" },
       ],
     },
     {
-      name: 'Analytics',
-      href: '/dashboard/analytics',
+      name: "Analytics",
+      href: "/dashboard/analytics",
       icon: MdTrendingUp,
       hasDropdown: false,
     },
     {
-      name: 'Payouts',
-      href: '/dashboard/payouts',
+      name: "Payouts",
+      href: "/dashboard/payouts",
       icon: MdPayment,
       hasDropdown: false,
     },
   ];
 
   const isActive = (href: string) => {
-    if (href === '/dashboard') {
+    if (href === "/dashboard") {
       return pathname === href;
     }
     return pathname.startsWith(href);
@@ -149,17 +152,24 @@ export default function DashboardLayout({
                       type="button"
                       onClick={() => setIsPromotionsOpen(!isPromotionsOpen)}
                       className={`w-full flex items-center gap-4 px-5 py-4 rounded-xl transition-all hover:bg-orange-200/40 text-[#8E98A8]`}
-                      style={{ fontFamily: 'Urbanist', fontSize: '20px', lineHeight: '100%', fontWeight: 400 }}
+                      style={{
+                        fontFamily: "Urbanist",
+                        fontSize: "20px",
+                        lineHeight: "100%",
+                        fontWeight: 400,
+                      }}
                     >
-                      <item.icon className={`w-6 h-6 ${isActive(item.href) ? 'text-orange-500' : ''}`} />
+                      <item.icon
+                        className={`w-6 h-6 ${isActive(item.href) ? "text-orange-500" : ""}`}
+                      />
                       <span>{item.name}</span>
                       <MdKeyboardArrowDown
                         className={`w-5 h-5 ml-auto transition-transform ${
-                          isPromotionsOpen ? 'rotate-180' : ''
+                          isPromotionsOpen ? "rotate-180" : ""
                         }`}
                       />
                     </button>
-                    
+
                     {/* Dropdown Menu */}
                     {isPromotionsOpen && item.subItems && (
                       <ul className="mt-2 ml-10 space-y-1">
@@ -168,7 +178,12 @@ export default function DashboardLayout({
                             <Link
                               href={subItem.href}
                               className="block px-5 py-3 rounded-xl transition-all hover:bg-orange-200/40 text-[#8E98A8]"
-                              style={{ fontFamily: 'Urbanist', fontSize: '18px', lineHeight: '100%', fontWeight: 400 }}
+                              style={{
+                                fontFamily: "Urbanist",
+                                fontSize: "18px",
+                                lineHeight: "100%",
+                                fontWeight: 400,
+                              }}
                             >
                               {subItem.name}
                             </Link>
@@ -181,9 +196,16 @@ export default function DashboardLayout({
                   <Link
                     href={item.href}
                     className="flex items-center gap-4 px-5 py-4 rounded-xl transition-all hover:bg-orange-200/40 text-[#8E98A8]"
-                    style={{ fontFamily: 'Urbanist', fontSize: '20px', lineHeight: '100%', fontWeight: 400 }}
+                    style={{
+                      fontFamily: "Urbanist",
+                      fontSize: "20px",
+                      lineHeight: "100%",
+                      fontWeight: 400,
+                    }}
                   >
-                    <item.icon className={`w-6 h-6 ${isActive(item.href) ? 'text-orange-500' : ''}`} />
+                    <item.icon
+                      className={`w-6 h-6 ${isActive(item.href) ? "text-orange-500" : ""}`}
+                    />
                     <span>{item.name}</span>
                   </Link>
                 )}
@@ -198,7 +220,12 @@ export default function DashboardLayout({
             type="button"
             onClick={handleLogout}
             className="w-full flex items-center gap-4 px-5 py-4 rounded-xl transition-all hover:bg-red-50 text-[#a51212] hover:text-red-500"
-            style={{ fontFamily: 'Urbanist', fontSize: '20px', lineHeight: '100%', fontWeight: 400 }}
+            style={{
+              fontFamily: "Urbanist",
+              fontSize: "20px",
+              lineHeight: "100%",
+              fontWeight: 400,
+            }}
           >
             <MdLogout className="w-6 h-6 flex-shrink-0" />
             <span>Logout</span>
@@ -217,7 +244,9 @@ export default function DashboardLayout({
             />
           </div>
           <h3 className="font-semibold text-center mb-2">Need Help?</h3>
-          <p className="text-sm text-center mb-4 text-orange-100">Contact Support</p>
+          <p className="text-sm text-center mb-4 text-orange-100">
+            Contact Support
+          </p>
         </div>
       </aside>
 
