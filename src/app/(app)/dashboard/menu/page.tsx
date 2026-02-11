@@ -11,7 +11,7 @@ import { BounceLoader } from "react-spinners";
 import Pagination from "@/components/ui/Pagination";
 import { MoreVerticalIcon, PencilIcon, TrashIcon } from "lucide-react";
 import { IMenuLists } from "@/models/menu";
-import MenuForm from "@/components/Form/CreateMenu";
+import MenuForm from "@/components/Form/MenuForm";
 
 export default function MenuPage() {
   const [search, setSearch] = useState("");
@@ -213,8 +213,11 @@ export default function MenuPage() {
             </button>
             <div className="pl-2">
               <div className="grid grid-cols-2 gap-2">
-                {["Breakfast", "Lunch", "Dinner"].map((m) => (
-                  <label className="flex items-center gap-2 cursor-pointer col-span-2">
+                {["Breakfast", "Lunch", "Dinner"].map((m, index) => (
+                  <label
+                    className="flex items-center gap-2 cursor-pointer col-span-2"
+                    key={index}
+                  >
                     <input
                       type="checkbox"
                       className="w-4 h-4 text-orange-500 border-gray-300 rounded"
