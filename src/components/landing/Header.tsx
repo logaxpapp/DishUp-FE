@@ -4,28 +4,61 @@ import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function Header() {
+export interface NavItem {
+  label: string;
+  href: string;
+}
+
+export interface CTAButton {
+  label: string;
+  href?: string;
+  onClick?: () => void;
+  variant?: "primary" | "secondary"; // primary = filled, secondary = outlined
+}
+
+export interface HeaderProps {
+  brandName?: [string, string];
+  brandHref?: string;
+  navItems?: NavItem[];
+  ctas?: CTAButton[];
+}
+
+const DEFAULT_BRAND: [string, string] = ["Loga", "Dash"];
+
+const DEFAULT_NAV: NavItem[] = [
+  { label: "Features", href: "#features" },
+  { label: "How It Works", href: "#how-it-works" },
+  { label: "Login", href: "/login" },
+];
+
+const DEFAULT_CTAS: CTAButton[] = [
+  { label: "Become a Partner", href: "/get-started", variant: "secondary" },
+  { label: "Download App", variant: "primary" },
+];
+
+export default function Header({
+  brandName = DEFAULT_BRAND,
+  brandHref = "/",
+  navItems = DEFAULT_NAV,
+  ctas = DEFAULT_CTAS,
+}: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
 
   // Scroll detection
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Lock body scroll when mobile menu is open
+  // Lock body scroll on mobile menu  
   useEffect(() => {
     if (!mobileOpen) return;
     document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = "";
-    };
+    return () => { document.body.style.overflow = ""; };
   }, [mobileOpen]);
 
   // Close on Escape
@@ -60,77 +93,46 @@ export default function Header() {
     >
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-10">
         <div className="flex h-16 sm:h-20 items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5">
+          <Link href={brandHref} className="flex items-center gap-2.5">
             <span className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-              <span className="text-orange-600">Loga</span>
-              <span className="text-gray-950">Dash</span>
+              <span className="text-orange-600">{brandName[0]}</span>
+              <span className="text-gray-950">{brandName[1]}</span>
             </span>
           </Link>
 
-          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-10 lg:gap-12">
-            <NavLink href="#features">Features</NavLink>
-            <NavLink href="#how-it-works">How It Works</NavLink>
-            <NavLink href="/login">Login</NavLink>
+            {navItems.map((item) => (
+              <NavLink key={item.href} href={item.href}>
+                {item.label}
+              </NavLink>
+            ))}
           </nav>
 
-          {/* Desktop CTAs */}
           <div className="hidden md:flex items-center gap-4">
-          <Link href="/get-started">
-  <motion.button
-    whileHover={{ scale: 1.04 }}
-    whileTap={{ scale: 0.97 }}
-    className="rounded-xl border border-gray-200 bg-white/80 px-6 py-3 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-50 transition-colors"
-  >
-    Become a Partner
-  </motion.button>
-</Link>
-
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.96 }}
-              className="rounded-xl bg-orange-600 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-orange-600/25 hover:bg-orange-700 transition-colors"
-            >
-              Download App
-            </motion.button>
+            {ctas.map((cta) => (
+              <CTABtn key={cta.label} cta={cta} />
+            ))}
           </div>
 
-          {/* Mobile Menu Button */}
           <button
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             className="md:hidden rounded-xl border border-gray-200 bg-white/80 backdrop-blur px-3.5 py-2.5 text-gray-800 shadow-sm hover:bg-gray-50 transition"
             onClick={() => setMobileOpen((v) => !v)}
           >
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-            >
+            <svg className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2.5">
               {mobileOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
               )}
             </svg>
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu Overlay + Panel */}
       <AnimatePresence>
         {mobileOpen && (
           <>
-            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -140,7 +142,6 @@ export default function Header() {
               onClick={() => setMobileOpen(false)}
             />
 
-            {/* Slide-down panel */}
             <motion.div
               ref={panelRef}
               initial={{ y: -20, opacity: 0 }}
@@ -152,44 +153,21 @@ export default function Header() {
               <div className="rounded-2xl border border-gray-200 bg-white/95 backdrop-blur-xl shadow-2xl overflow-hidden">
                 <div className="divide-y divide-gray-100">
                   <div className="p-4 space-y-2">
-                    <MobileNavItem
-                      href="#features"
-                      onClose={() => setMobileOpen(false)}
-                    >
-                      Features
-                    </MobileNavItem>
-                    <MobileNavItem
-                      href="#how-it-works"
-                      onClose={() => setMobileOpen(false)}
-                    >
-                      How It Works
-                    </MobileNavItem>
-                    <MobileNavItem
-                      href="/auth/login"
-                      onClose={() => setMobileOpen(false)}
-                    >
-                      Login
-                    </MobileNavItem>
+                    {navItems.map((item) => (
+                      <MobileNavItem
+                        key={item.href}
+                        href={item.href}
+                        onClose={() => setMobileOpen(false)}
+                      >
+                        {item.label}
+                      </MobileNavItem>
+                    ))}
                   </div>
 
-                  <div className="p-5 space-y-4">
-                    <motion.button
-                      whileTap={{ scale: 0.97 }}
-                      className="w-full rounded-xl bg-orange-600 py-4 text-base font-semibold text-white shadow-lg hover:bg-orange-700 transition-colors"
-                    >
-                      Download App
-                    </motion.button>
-
-                <Link href="/auth/get-started">
-  <motion.button
-    whileHover={{ scale: 1.04 }}
-    whileTap={{ scale: 0.97 }}
-    className="rounded-xl border border-gray-200 bg-white/80 px-6 py-3 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-50 transition-colors"
-  >
-    Become a Partner
-  </motion.button>
-</Link>
-
+                  <div className="p-5 space-y-3">
+                    {ctas.map((cta) => (
+                      <MobileCTABtn key={cta.label} cta={cta} />
+                    ))}
                   </div>
                 </div>
               </div>
@@ -201,15 +179,7 @@ export default function Header() {
   );
 }
 
-/* ────────────────────────────────────────────── */
-
-function NavLink({
-  href,
-  children,
-}: {
-  href: string;
-  children: React.ReactNode;
-}) {
+function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <Link
       href={href}
@@ -221,7 +191,51 @@ function NavLink({
   );
 }
 
-/* ────────────────────────────────────────────── */
+function CTABtn({ cta }: { cta: CTAButton }) {
+  const isPrimary = cta.variant === "primary";
+
+  const button = isPrimary ? (
+    <motion.button
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.96 }}
+      onClick={cta.onClick}
+      className="rounded-xl bg-orange-600 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-orange-600/25 hover:bg-orange-700 transition-colors"
+    >
+      {cta.label}
+    </motion.button>
+  ) : (
+    <motion.button
+      whileHover={{ scale: 1.04 }}
+      whileTap={{ scale: 0.97 }}
+      onClick={cta.onClick}
+      className="rounded-xl border border-gray-200 bg-white/80 px-6 py-3 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-50 transition-colors"
+    >
+      {cta.label}
+    </motion.button>
+  );
+
+  return cta.href ? <Link href={cta.href}>{button}</Link> : button;
+}
+
+function MobileCTABtn({ cta }: { cta: CTAButton }) {
+  const isPrimary = cta.variant === "primary";
+
+  const button = (
+    <motion.button
+      whileTap={{ scale: 0.97 }}
+      onClick={cta.onClick}
+      className={`w-full rounded-xl py-4 text-base font-semibold transition-colors ${
+        isPrimary
+          ? "bg-orange-600 text-white shadow-lg hover:bg-orange-700"
+          : "border border-gray-200 bg-white/80 text-gray-900 shadow-sm hover:bg-gray-50"
+      }`}
+    >
+      {cta.label}
+    </motion.button>
+  );
+
+  return cta.href ? <Link href={cta.href}>{button}</Link> : button;
+}
 
 function MobileNavItem({
   href,
