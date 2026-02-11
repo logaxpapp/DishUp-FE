@@ -1,10 +1,18 @@
 'use client';
 
 import React, { useState } from 'react';
-import Image from 'next/image';
+import DashboardHeader from '@/components/Dashboardheader';
 
 export default function CouponManagementPage() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+
+  const handleNotificationClick = () => {
+    console.log('Notifications clicked');
+  };
+
+  const handleSettingsClick = () => {
+    console.log('Settings clicked');
+  };
 
   const coupons = Array(9).fill({
     name: 'Weekend Special',
@@ -20,43 +28,13 @@ export default function CouponManagementPage() {
 
   return (
     <div className="min-h-screen bg-orange-50/30">
-      {/* Header */}
-      <header className="bg-white px-8 py-4 flex items-center justify-between border-b">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">Coupon Management</h1>
-          <p className="text-sm text-gray-600">Hello, Welcome Back</p>
-        </div>
-        
-        <div className="flex items-center gap-4">
-          <button className="p-2 hover:bg-gray-100 rounded-lg">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-            </svg>
-          </button>
-
-          <button className="relative p-2 hover:bg-gray-100 rounded-lg">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-            </svg>
-          </button>
-
-          <div className="w-10 h-10 rounded-full bg-orange-500 overflow-hidden">
-            <Image
-              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop"
-              alt="User"
-              width={40}
-              height={40}
-              className="w-full h-full object-cover"
-            />
-          </div>
-
-          <button className="text-gray-400 hover:text-gray-600">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-        </div>
-      </header>
+      {/* Shared Header Component */}
+      <DashboardHeader
+        title="Coupon Management"
+        subtitle="Hello, Welcome Back"
+        onNotificationClick={handleNotificationClick}
+        onSettingsClick={handleSettingsClick}
+      />
 
       <div className="p-8">
         {/* Breadcrumb */}

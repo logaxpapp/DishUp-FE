@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import DashboardHeader from "@/components/Dashboardheader";
 import { UploadMenuModal } from "@/components/UploadMenuModal";
 import { useGetAllCategoriesQuery } from "@/hooks/useBaseQuery";
 import { useGetAllMenuListsQuery } from "@/hooks/useMenuQuery";
@@ -24,8 +25,18 @@ export default function MenuPage() {
   const [pageSize, setPageSize] = useState(10);
   const [page, setPage] = useState(1);
   const [menuItemList, setMenuItemList] = useState<IMenuLists | null>(null);
-
   const [activeMenuIndex, setActiveMenuIndex] = useState<number | null>(null);
+
+  // Handler functions for the shared header
+  const handleNotificationClick = () => {
+    console.log("Notifications clicked");
+    // Add your notification logic here
+  };
+
+  const handleSettingsClick = () => {
+    console.log("Settings clicked");
+    // Add your settings logic here
+  };
 
   const handleMenuToggle = (index: number) => {
     setActiveMenuIndex(activeMenuIndex === index ? null : index);
@@ -49,6 +60,7 @@ export default function MenuPage() {
     page,
     pageSize,
   );
+
   const handleChange = (id: string) => {
     if (categoryId === id) {
       setCategoryId("");
@@ -56,6 +68,7 @@ export default function MenuPage() {
       setCategoryId(id);
     }
   };
+
   const handleChangeMealTime = (m: string) => {
     if (mealTime === m) {
       setMealTime("");
@@ -63,87 +76,20 @@ export default function MenuPage() {
       setMealTime(m);
     }
   };
+
   const handleClickIcon = (index: number) => {
     setActiveMenuIndex((prev) => (prev === index ? null : index));
   };
+
   return (
     <div className="min-h-screen bg-orange-50/30">
-      {/* Header */}
-      <header className="bg-white px-8 py-4 flex items-center justify-between border-b">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">Menu</h1>
-          <p className="text-sm text-gray-600">Hello, Welcome Back</p>
-        </div>
-
-        <div className="flex items-center gap-4">
-          {/* Notification bell */}
-          <button className="relative p-2 hover:bg-gray-100 rounded-lg">
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-              />
-            </svg>
-          </button>
-
-          {/* Settings icon */}
-          <button className="p-2 hover:bg-gray-100 rounded-lg">
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-              />
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-              />
-            </svg>
-          </button>
-
-          {/* AVATAR - ADD THIS */}
-          <div className="w-10 h-10 rounded-full bg-orange-500 overflow-hidden">
-            <Image
-              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop"
-              alt="User"
-              width={40}
-              height={40}
-              className="w-full h-full object-cover"
-            />
-          </div>
-
-          <button className="text-gray-400 hover:text-gray-600">
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </button>
-        </div>
-      </header>
+      {/* Shared Header Component */}
+      <DashboardHeader
+        title="Menu"
+        subtitle="Hello, Welcome Back"
+        onNotificationClick={handleNotificationClick}
+        onSettingsClick={handleSettingsClick}
+      />
 
       <div className="flex">
         {/* Sidebar Filter */}
@@ -230,103 +176,6 @@ export default function MenuPage() {
               </div>
             </div>
           </div>
-
-          {/* Price Range Dropdown */}
-          {/* <div className="mb-6">
-            <button className="w-full flex items-center justify-between text-sm font-medium text-gray-900 mb-3">
-              <span>Price Range</span>
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-            </button>
-            <div className="pl-2">
-              <div className="grid grid-cols-2 gap-2">
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    className="w-4 h-4 text-orange-500 border-gray-300 rounded"
-                  />
-                  <span className="text-sm text-gray-600">$0 - $10</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    className="w-4 h-4 text-orange-500 border-gray-300 rounded"
-                  />
-                  <span className="text-sm text-gray-600">$20 - $30</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    className="w-4 h-4 text-orange-500 border-gray-300 rounded"
-                  />
-                  <span className="text-sm text-gray-600">$10 - $20</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    className="w-4 h-4 text-orange-500 border-gray-300 rounded"
-                  />
-                  <span className="text-sm text-gray-600">$30 up</span>
-                </label>
-              </div>
-            </div>
-          </div> */}
-
-          {/* Promos Dropdown */}
-          {/* <div className="mb-6">
-            <button className="w-full flex items-center justify-between text-sm font-medium text-gray-900 mb-3">
-              <span>Promos</span>
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-            </button>
-            <div className="pl-2">
-              <div className="grid grid-cols-2 gap-2">
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    className="w-4 h-4 text-orange-500 border-gray-300 rounded"
-                  />
-                  <span className="text-sm text-gray-600">Buy get 1 free</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    className="w-4 h-4 text-orange-500 border-gray-300 rounded"
-                  />
-                  <span className="text-sm text-gray-600">20% OFF</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer col-span-2">
-                  <input
-                    type="checkbox"
-                    className="w-4 h-4 text-orange-500 border-gray-300 rounded"
-                  />
-                  <span className="text-sm text-gray-600">Buy get 1 free</span>
-                </label>
-              </div>
-            </div>
-          </div> */}
 
           <button className="w-full bg-orange-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-orange-600 transition-colors">
             Submit
