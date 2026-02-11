@@ -2,6 +2,7 @@
 import { API_ENDPOINTS } from "@/constants/api";
 import { IAllBanksApiResponse } from "@/models/bank";
 import {
+  IAllCategoriesApiResponse,
   IAllCountryApiResponse,
   IAllStateApiResponse,
 } from "@/models/location";
@@ -28,4 +29,12 @@ export async function getStateLists(countryId: string) {
   );
 
   return response?.data?.data?.result;
+}
+
+export async function getCategories() {
+  const response = await axios.get<IAllCategoriesApiResponse>(
+    `${API_ENDPOINTS.CATEGORY.GET_CATEGORIES}`,
+  );
+
+  return response?.data?.data;
 }

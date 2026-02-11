@@ -28,6 +28,13 @@ export interface IState {
   id: string;
   name: string;
 }
+export interface ICategory {
+  id: string;
+  name: string;
+  description: string;
+  createdAt: string;
+}
 export type IAllBanksApiResponse = IBaseResponse<{ data: IBank[] }>;
 export type IAllCountryApiResponse = IBaseResponse<ICountry[]>;
 export type IAllStateApiResponse = IBaseResponse<{ result: IState[] }>;
+export type IAllCategoriesApiResponse = IBaseResponse<ICategory[]>;

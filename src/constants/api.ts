@@ -22,4 +22,10 @@ export const API_ENDPOINTS = {
   USER: {
     COMPLETE_PROFILE: `${baseUrl}/re/user/complete-profile`,
   },
+  CATEGORY: {
+    GET_CATEGORIES: `${baseUrl}/re/category`,
+  },
+  MENU: {
+    MENU_API: `${baseUrl}/re/menu`,
+  },
 };
