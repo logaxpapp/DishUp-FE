@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import { useAppSelector } from "@/hooks/useAppSelector";
 
 interface DashboardHeaderProps {
   title: string;
@@ -14,15 +15,23 @@ interface DashboardHeaderProps {
 export default function DashboardHeader({
   title,
   subtitle = "Hello, Welcome Back",
-  userImageUrl = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop",
+  userImageUrl = "",
   onNotificationClick,
   onSettingsClick,
 }: DashboardHeaderProps) {
+  const { user } = useAppSelector((state) => state.auth);
+  const firstName = user?.profile?.firstName ?? "";
+  const lastName = user?.profile?.lastName ?? "";
+  const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
   return (
     <header className="bg-white px-8 py-4 flex items-center justify-between border-b">
       <div>
         <h1 className="text-2xl font-bold text-gray-900">{title}</h1>
-        <p className="text-sm text-gray-600">{subtitle}</p>
+        <p className="text-sm text-gray-600">
+          {firstName || lastName
+            ? `${subtitle ?? ""} ${firstName ?? ""} ${lastName ?? ""}`.trim()
+            : ""}
+        </p>
       </div>
 
       <div className="flex items-center gap-4">
@@ -75,14 +84,18 @@ export default function DashboardHeader({
         </button>
 
         {/* User Avatar */}
-        <div className="w-10 h-10 rounded-full bg-orange-500 overflow-hidden">
-          <Image
-            src={userImageUrl}
-            alt="User"
-            width={40}
-            height={40}
-            className="w-full h-full object-cover"
-          />
+        <div className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center text-white font-semibold text-sm overflow-hidden">
+          {userImageUrl ? (
+            <Image
+              src={userImageUrl}
+              alt="User"
+              width={40}
+              height={40}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            initials || ""
+          )}
         </div>
 
         <button className="text-gray-400 hover:text-gray-600">
