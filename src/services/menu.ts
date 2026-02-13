@@ -78,3 +78,13 @@ export async function updateMenuPrice({
   );
   return response.data.data;
 }
+export async function deleteMenuPrice({
+  menuPriceId,
+}: {
+  menuPriceId: string;
+}) {
+  const response = await axios.delete(
+    `${API_ENDPOINTS.MENU.MENU_PRICING}/${menuPriceId}`,
+  );
+  return response.data.data;
+}

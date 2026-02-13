@@ -6,6 +6,7 @@ import {
   getMenuLists,
   updateMenu,
   updateMenuPrice,
+  deleteMenuPrice,
 } from "@/services/menu";
 
 export function useCreateMenuMutation({ close }: { close: () => void }) {
@@ -59,15 +60,27 @@ export function useCreateMenuPriceMutation({ close }: { close: () => void }) {
   });
 }
 
-export function useUpdateMenuPriceMutation({ close }: { close: () => void }) {
+export function useUpdateMenuPriceMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: updateMenuPrice,
     onError: () => {},
     onSettled: () => {
-      close();
       queryClient.invalidateQueries({ queryKey: ["menu"] }).catch(() => {});
+    },
+  });
+}
+
+export function useDeleteMenuPriceMutation({ close }) {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: deleteMenuPrice,
+    onError: () => {},
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["menu"] }).catch(() => {});
+      close();
     },
   });
 }

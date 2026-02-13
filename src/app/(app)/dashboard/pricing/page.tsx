@@ -550,7 +550,6 @@ export default function PricingPage() {
         </main>
       </div>
 
-      {/* Add Price Modal */}
       {isAddPriceModalOpen && (
         <PriceModalForm
           close={() => setIsAddPriceModalOpen(false)}
