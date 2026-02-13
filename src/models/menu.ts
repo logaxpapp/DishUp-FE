@@ -32,8 +32,25 @@ export interface IMenuLists {
       createdAt: string;
     };
   }[];
+  prices: {
+    id: string;
+    menuId: string;
+    portionName: string;
+    regularPrice: number;
+    promoPrice: number;
+    validDate: string;
+    createdAt: string;
+    updatedAt: string;
+  }[];
 }
 export type IMenuListsApiResponse = IBaseResponse<{
   data: IMenuLists[];
   meta: IMeta;
 }>;
+
+export interface IMenuPricePayload {
+  portionName: string;
+  regularPrice: number;
+  promoPrice: number;
+  validDate: string;
+}

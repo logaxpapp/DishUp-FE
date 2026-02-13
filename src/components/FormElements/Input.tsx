@@ -9,7 +9,7 @@ interface CustomInputProps extends InputProps {
   suffix?: React.ReactNode;
   status?: "" | "error" | "warning";
   size?: "large" | "small" | "middle";
-  type?: "number" | "text" | "email" | "date" | "password";
+  type?: "number" | "text" | "email" | "date" | "password" | "datetime-local";
   variant?: "filled" | "outlined";
   className?: string;
   necessary?: boolean;

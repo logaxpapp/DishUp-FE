@@ -14,3 +14,24 @@ export const menuSchema = yup.object({
     .typeError("Reorder threshold must be a number"),
   categoryIds: yup.string().required("Category is required"),
 });
+
+export const priceSchema = yup.object().shape({
+  prices: yup
+    .array()
+    .of(
+      yup.object().shape({
+        portionName: yup.string().required("Portion name is required"),
+        regularPrice: yup.string().required("Regular price is required"),
+        promoPrice: yup.string().required("Promo price is required"),
+        validDate: yup
+          .string()
+          .required("Valid date and time is required")
+          .matches(
+            /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?$/,
+            "Date must be in YYYY-MM-DDTHH:mm or YYYY-MM-DDTHH:mm:ss format",
+          ),
+      }),
+    )
+    .required("At least one portion name is required")
+    .min(1, "At least one portion name is required"),
+});

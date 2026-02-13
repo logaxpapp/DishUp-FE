@@ -1,6 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createMenu, getMenuLists, updateMenu } from "@/services/menu";
+import {
+  addMenuPrice,
+  createMenu,
+  getMenuLists,
+  updateMenu,
+  updateMenuPrice,
+} from "@/services/menu";
 
 export function useCreateMenuMutation({ close }: { close: () => void }) {
   const queryClient = useQueryClient();
@@ -32,6 +38,32 @@ export function useUpdateMenuMutation({ close }: { close: () => void }) {
 
   return useMutation({
     mutationFn: updateMenu,
+    onError: () => {},
+    onSettled: () => {
+      close();
+      queryClient.invalidateQueries({ queryKey: ["menu"] }).catch(() => {});
+    },
+  });
+}
+
+export function useCreateMenuPriceMutation({ close }: { close: () => void }) {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: addMenuPrice,
+    onError: () => {},
+    onSettled: () => {
+      close();
+      queryClient.invalidateQueries({ queryKey: ["menu"] }).catch(() => {});
+    },
+  });
+}
+
+export function useUpdateMenuPriceMutation({ close }: { close: () => void }) {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: updateMenuPrice,
     onError: () => {},
     onSettled: () => {
       close();

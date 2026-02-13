@@ -27,5 +27,6 @@ export const API_ENDPOINTS = {
   },
   MENU: {
     MENU_API: `${baseUrl}/re/menu`,
+    MENU_PRICING: `${baseUrl}/re/menu/price`,
   },
 };

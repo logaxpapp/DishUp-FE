@@ -1,5 +1,9 @@
 import { API_ENDPOINTS } from "@/constants/api";
-import { IMenuListsApiResponse, IMenuPayload } from "@/models/menu";
+import {
+  IMenuListsApiResponse,
+  IMenuPayload,
+  IMenuPricePayload,
+} from "@/models/menu";
 import axios from "axios";
 
 export async function createMenu(payload: IMenuPayload) {
@@ -41,4 +45,36 @@ export async function getMenuLists(
   );
 
   return response?.data?.data;
+}
+
+export async function addMenuPrice({
+  payload,
+  menuId,
+}: {
+  payload;
+  menuId: string;
+}) {
+  const response = await axios.post(
+    `${API_ENDPOINTS.MENU.MENU_PRICING}/${menuId}`,
+    payload,
+  );
+  return response.data.data;
+}
+export async function updateMenuPrice({
+  payload,
+  menuPriceId,
+}: {
+  payload: {
+    portionName: string;
+    regularPrice: number;
+    promoPrice: number;
+    validDate: string;
+  };
+  menuPriceId: string;
+}) {
+  const response = await axios.patch(
+    `${API_ENDPOINTS.MENU.MENU_PRICING}/${menuPriceId}`,
+    payload,
+  );
+  return response.data.data;
 }

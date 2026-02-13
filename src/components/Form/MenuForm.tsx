@@ -103,7 +103,7 @@ const MenuForm = ({
         mealImageUrl: uploadedUrl ?? existingImageUrl,
       };
 
-      updateMenu
+      menuItemList
         ? updateMenu.mutate({ payload: finalPayload, menuId: menuItemList?.id })
         : createMenu.mutate(finalPayload);
     } catch (error) {
