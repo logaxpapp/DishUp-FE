@@ -263,16 +263,15 @@ export default function MenuPage() {
               </div>
             )}
 
-            {/* Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 mb-6">
               {isLoading ? (
                 <div className="col-span-full flex justify-center items-center h-64">
                   <BounceLoader color="#009688" size={60} />
                 </div>
               ) : menuItems && menuItems?.data?.length > 0 ? (
-                menuItems.data.map((item, index) => (
+                menuItems?.data?.map((item, index) => (
                   <div
-                    key={index}
+                    key={item.id}
                     className="bg-white rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow relative"
                   >
                     <div className="absolute top-3 right-3 z-20">
@@ -303,7 +302,6 @@ export default function MenuPage() {
                       )}
                     </div>
 
-                    {/* Card Image */}
                     <div className="relative w-full h-40 mb-3 bg-orange-50 rounded-xl overflow-hidden">
                       <Image
                         src={item?.mealImageUrl || "/noMenu.jpg"}
@@ -313,14 +311,52 @@ export default function MenuPage() {
                       />
                     </div>
 
-                    {/* Card Info */}
                     <h3 className="font-medium text-gray-900 mb-1">
                       {truncateText(item?.itemName, 15)}
                     </h3>
-                    <div className="flex items-center justify-between">
+
+                    {item?.prices?.length > 0 ? (
+                      <div className="mt-2 space-y-1 border-t pt-2">
+                        {item.prices.map((price) => (
+                          <div
+                            key={price.id}
+                            className="flex items-center justify-between text-sm"
+                          >
+                            <span className="text-gray-600">
+                              {price.portionName}
+                            </span>
+
+                            <div className="flex items-center gap-2">
+                              {price.promoPrice ? (
+                                <>
+                                  <span className="text-gray-400 line-through text-xs">
+                                    ₦{price.regularPrice}
+                                  </span>
+                                  <span className="text-green-600 font-semibold">
+                                    ₦{price.promoPrice}
+                                  </span>
+                                </>
+                              ) : (
+                                <span className="text-orange-500 font-semibold">
+                                  ₦{price.regularPrice}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-xs text-gray-400 mt-2 border-t pt-2">
+                        No pricing available
+                      </p>
+                    )}
+
+                    {/* Bottom Info Row */}
+                    <div className="flex items-center justify-between mt-3">
                       <span className="text-orange-500 font-semibold">
-                        {item?.defaultStock}
+                        Stock: {item?.defaultStock}
                       </span>
+
                       <div className="flex items-center gap-1">
                         <svg
                           className="w-4 h-4 text-yellow-400 fill-current"
