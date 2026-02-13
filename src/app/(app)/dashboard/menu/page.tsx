@@ -229,7 +229,7 @@ export default function MenuPage() {
                 <span className="text-sm font-medium">Upload Menu</span>
               </button>
 
-              {/* <button
+              <button
                 onClick={() => {
                   setMenuItemList(null);
                   setIsCreateModalOpen(true);
@@ -250,7 +250,7 @@ export default function MenuPage() {
                   />
                 </svg>
                 <span className="text-sm font-medium">Add Item</span>
-              </button> */}
+              </button>
             </div>
           </div>
 
