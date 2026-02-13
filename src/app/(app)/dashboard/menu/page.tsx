@@ -229,7 +229,7 @@ export default function MenuPage() {
                 <span className="text-sm font-medium">Upload Menu</span>
               </button>
 
-              <button
+              {/* <button
                 onClick={() => {
                   setMenuItemList(null);
                   setIsCreateModalOpen(true);
@@ -250,7 +250,7 @@ export default function MenuPage() {
                   />
                 </svg>
                 <span className="text-sm font-medium">Add Item</span>
-              </button>
+              </button> */}
             </div>
           </div>
 
@@ -312,7 +312,7 @@ export default function MenuPage() {
                     </div>
 
                     <h3 className="font-medium text-gray-900 mb-1">
-                      {truncateText(item?.itemName, 15)}
+                      {item?.itemName}
                     </h3>
 
                     {item?.prices?.length > 0 ? (
