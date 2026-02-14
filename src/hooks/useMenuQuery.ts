@@ -22,11 +22,11 @@ export function useCreateMenuMutation({ close }: { close: () => void }) {
   });
 }
 export function useGetAllMenuListsQuery(
-  search: string,
-  categoryId: string,
-  mealTime: string,
-  page: number,
-  pageSize: number,
+  search?: string,
+  categoryId?: string,
+  mealTime?: string,
+  page?: number,
+  pageSize?: number,
 ) {
   return useQuery({
     queryKey: ["menu", search, categoryId, mealTime, page, pageSize],

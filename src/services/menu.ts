@@ -25,11 +25,11 @@ export async function updateMenu({
 }
 
 export async function getMenuLists(
-  search: string,
-  categoryId: string,
-  mealTime: string,
-  page: number,
-  pageSize: number,
+  search?: string,
+  categoryId?: string,
+  mealTime?: string,
+  page?: number,
+  pageSize?: number,
 ) {
   const response = await axios.get<IMenuListsApiResponse>(
     `${API_ENDPOINTS.MENU.MENU_API}`,
@@ -37,7 +37,7 @@ export async function getMenuLists(
       params: {
         search,
         categoryId,
-        mealTime: mealTime.toUpperCase(),
+        mealTime: mealTime ? mealTime.toUpperCase() : undefined,
         page,
         pageSize,
       },

@@ -10,4 +10,9 @@ export interface IMeta {
   page: number;
   pageSize: number;
   totalPages: number;
+  summary?: {
+    inStock: number;
+    lowStock: number;
+    outOfStock: number;
+  };
 }

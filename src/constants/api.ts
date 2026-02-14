@@ -32,4 +32,8 @@ export const API_ENDPOINTS = {
   SUPPLIER: {
     SUPPLIER_API: `${baseUrl}/re/supplier`,
   },
+  INVENTORY: {
+    ANALYTICS: `${baseUrl}/re/inventory/dashboard/counters`,
+    INVENTORY_API: `${baseUrl}/re/inventory`,
+  },
 };

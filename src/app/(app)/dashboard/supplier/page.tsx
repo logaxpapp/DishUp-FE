@@ -9,11 +9,15 @@ import {
 import { ISupplier } from "@/models/supplier";
 import SupplierForm from "@/components/Form/SupplierForm";
 import WarningModal from "@/components/reusables/WarningModal";
+import { BounceLoader } from "react-spinners";
 
 export default function OrdersPage() {
   const [pageSize, setPageSize] = useState(10);
   const [page, setPage] = useState(1);
-  const { data: suppliers } = useGetAllSuppliersQuery(page, pageSize);
+  const { data: suppliers, isLoading } = useGetAllSuppliersQuery(
+    page,
+    pageSize,
+  );
   const [supplierData, setSupplierData] = useState<ISupplier | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModal, setIsDeleteModal] = useState(false);
@@ -112,65 +116,75 @@ export default function OrdersPage() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {suppliers?.map((s, index) => (
-                  <tr key={index} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {s?.name}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                      {s?.email}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                      {s?.phone}
-                    </td>
-                    <td className="px-4 py-3">
-                      <div className="flex items-center gap-3">
-                        <button
-                          onClick={() => {
-                            setSupplierData(s);
-                            setIsModalOpen(true);
-                          }}
-                          className="p-2 bg-green-100 text-green-600 rounded-lg hover:bg-green-200 transition"
-                        >
-                          <svg
-                            className="w-4 h-4"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                            />
-                          </svg>
-                        </button>
-                        <button
-                          className="p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
-                          onClick={() => {
-                            setSupplierData(s);
-                            setIsDeleteModal(true);
-                          }}
-                        >
-                          <svg
-                            className="w-4 h-4"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M19 7l-1 14H6L5 7m5 4v6m4-6v6M9 7V4h6v3m-9 0h12"
-                            />
-                          </svg>
-                        </button>
+                {isLoading ? (
+                  <tr>
+                    <td colSpan={4} className="h-64">
+                      <div className="flex justify-center items-center h-full w-full">
+                        <BounceLoader color="#009688" size={60} />
                       </div>
                     </td>
                   </tr>
-                ))}
+                ) : (
+                  suppliers?.map((s, index) => (
+                    <tr key={index} className="hover:bg-gray-50">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {s?.name}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                        {s?.email}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                        {s?.phone}
+                      </td>
+                      <td className="px-4 py-3">
+                        <div className="flex items-center gap-3">
+                          <button
+                            onClick={() => {
+                              setSupplierData(s);
+                              setIsModalOpen(true);
+                            }}
+                            className="p-2 bg-green-100 text-green-600 rounded-lg hover:bg-green-200 transition"
+                          >
+                            <svg
+                              className="w-4 h-4"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                              />
+                            </svg>
+                          </button>
+                          <button
+                            className="p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+                            onClick={() => {
+                              setSupplierData(s);
+                              setIsDeleteModal(true);
+                            }}
+                          >
+                            <svg
+                              className="w-4 h-4"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M19 7l-1 14H6L5 7m5 4v6m4-6v6M9 7V4h6v3m-9 0h12"
+                              />
+                            </svg>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>

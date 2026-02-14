@@ -25,7 +25,6 @@ const MenuForm = ({ close, categories, menuItemList, title }: any) => {
 
   const createMenu = useCreateMenuMutation({ close });
   const updateMenu = useUpdateMenuMutation({ close });
-  console.log(menuItemList);
 
   const {
     control,

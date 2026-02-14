@@ -19,7 +19,7 @@ export function useCreateSupplierMutation({ close }: { close: () => void }) {
     },
   });
 }
-export function useGetAllSuppliersQuery(page: number, pageSize: number) {
+export function useGetAllSuppliersQuery(page?: number, pageSize?: number) {
   return useQuery({
     queryKey: ["supplier", page, pageSize],
     queryFn: () => getSuppliers(page, pageSize),

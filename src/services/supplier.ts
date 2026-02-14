@@ -28,7 +28,7 @@ export async function updateSupplier({
   return response.data.data;
 }
 
-export async function getSuppliers(page: number, pageSize: number) {
+export async function getSuppliers(page?: number, pageSize?: number) {
   const response = await axios.get<ISupplierApiResponse>(
     `${API_ENDPOINTS.SUPPLIER.SUPPLIER_API}`,
     {

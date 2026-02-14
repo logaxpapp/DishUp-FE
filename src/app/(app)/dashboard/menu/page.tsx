@@ -60,6 +60,7 @@ export default function MenuPage() {
     page,
     pageSize,
   );
+  console.log({ menuItems: menuItems });
 
   const handleChange = (id: string) => {
     if (categoryId === id) {
@@ -228,29 +229,30 @@ export default function MenuPage() {
                 </svg>
                 <span className="text-sm font-medium">Upload Menu</span>
               </button>
-
-              <button
-                onClick={() => {
-                  setMenuItemList(null);
-                  setIsCreateModalOpen(true);
-                }}
-                className="flex items-center gap-2 px-4 py-2.5 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
-              >
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+              {categories && menuItems?.data && (
+                <button
+                  onClick={() => {
+                    setMenuItemList(null);
+                    setIsCreateModalOpen(true);
+                  }}
+                  className="flex items-center gap-2 px-4 py-2.5 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 4v16m8-8H4"
-                  />
-                </svg>
-                <span className="text-sm font-medium">Add Item</span>
-              </button>
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 4v16m8-8H4"
+                    />
+                  </svg>
+                  <span className="text-sm font-medium">Add Item</span>
+                </button>
+              )}
             </div>
           </div>
 
@@ -411,7 +413,7 @@ export default function MenuPage() {
         <MenuForm
           close={() => setIsCreateModalOpen(false)}
           categories={categories}
-          menuItemList={menuItemList}
+          menuItemList={menuItems}
           title={menuItemList ? "Edit New Menu Item" : "Create New Menu Item"}
         />
       )}
