@@ -76,12 +76,12 @@ export default function DashboardLayout({
       icon: MdRestaurantMenu,
       hasDropdown: false,
     },
-    {
-      name: "Pricing",
-      href: "/dashboard/pricing",
-      icon: MdAttachMoney,
-      hasDropdown: false,
-    },
+    // {
+    //   name: "Pricing",
+    //   href: "/dashboard/pricing",
+    //   icon: MdAttachMoney,
+    //   hasDropdown: false,
+    // },
     {
       name: "Inventory",
       href: "/dashboard/inventory",
