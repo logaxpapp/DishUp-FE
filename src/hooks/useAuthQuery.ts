@@ -40,9 +40,8 @@ export function useRegisterMutation(email: string) {
 
   return useMutation({
     mutationFn: register,
-    onSuccess: (response: any) => {},
-    onSettled: (response) => {
-      const token = response?.token;
+    onSuccess: (response: any) => {
+       const token = response?.token;
       customToast.success("Registration successful");
       dispatch(
         setRegisterUser({
@@ -51,6 +50,9 @@ export function useRegisterMutation(email: string) {
         }),
       );
       router.push("/verify-code");
+    },
+    onSettled: (response) => {
+
     },
   });
 }
