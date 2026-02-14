@@ -89,6 +89,12 @@ export default function DashboardLayout({
       hasDropdown: false,
     },
     {
+      name: "Supplier",
+      href: "/dashboard/supplier",
+      icon: MdRestaurantMenu,
+      hasDropdown: false,
+    },
+    {
       name: "Promotions",
       href: "/dashboard/promotions",
       icon: MdLocalOffer,
